@@ -15,5 +15,14 @@ app.get("/", (req,res) => {
 })
 
 //Parametric endpoint (get a row from a table of endpoint eg users/:user)
+app.get("/users/:user", (req, res) => {
+    controllers.getUserByParametric(req, res)
+})
 
 //Query in endpoint (get users by given table entry to property eg user/query?isOnline=true)
+//Can add check / other query responses
+app.get("/users", (req,res) => {
+    controllers.getUserNamesByIsOnlineQuery(req,res)
+})
+
+//POST / PUT / DELETE examples
