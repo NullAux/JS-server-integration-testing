@@ -1,5 +1,6 @@
 const express = require("express")
 const app = express()
+const controllers = require("./controllers.js")
 module.exports = app
 
 //app.use(express.json())//<- use this to take requests for the database info
@@ -10,7 +11,7 @@ module.exports = app
 
 //Get / - return message (in obj)
 app.get("/", (req,res) => {
-    res.status(200).send({msg: "Welcome to the server!"})
+    controllers.getGenericMsg(req,res)
 })
 
 //Parametric endpoint (get a row from a table of endpoint eg users/:user)
