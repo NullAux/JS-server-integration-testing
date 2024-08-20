@@ -12,6 +12,11 @@ exports.getClient = () => {
     return pool.connect()
 }
 
+exports.closePool = async () => {
+    return await pool.end()
+}
+
+
 //Seed database
-const seedDatabase = require("./seed_database")
-seedDatabase(pool)
+//const seedDatabase = require("./seed_database")
+//seedDatabase(pool)

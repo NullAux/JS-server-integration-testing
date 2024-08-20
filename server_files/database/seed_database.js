@@ -1,5 +1,6 @@
 const utils = require("./utils.js")
 const format = require("pg-format")
+const pool = require("./db_index.js")
 
 const databaseData = [
     ["userNumberOne", 'FALSE', "I'm number one!"],
@@ -18,5 +19,5 @@ async function seedDatabase(pool) {
     //console.log(table.rows)
 }
 
-//seedDatabase()
-module.exports = seedDatabase
+seedDatabase(pool)
+//module.exports = seedDatabase
