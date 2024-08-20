@@ -3,8 +3,10 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
-    "test": "node ./server_files/database/seed_database.js && jest",
-    "dev": "nodemon ./server-files/index.js"
+    "test": "jest",
+    "dev": "nodemon ./server-files/index.js",
+    "seedDB": "node ./server_files/database/seed_database.js"
+    
   },
   "keywords": [],
   "author": "",
