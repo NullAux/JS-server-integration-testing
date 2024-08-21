@@ -51,3 +51,22 @@ describe("GET /users?isOnline=true - get the names of online users", () => {
         })
     })
 })
+
+//Testing error messages
+describe("GET /users/:user error messages", () => {
+    test("When given an invalid ID, return 400 Bad Request", () => {
+        return request(app).get("/users/NameThatIsTooooooLong")
+        .then((result) => {
+            expect(result.status).toBe(400)
+        })
+    })
+
+    test("When user does not exist, return 404 Not Found", () => {
+        return request(app).get("/users/GhostUser")
+        .then((result) => {
+            console.log(result.body)
+            expect(result.status).toBe(404)
+            expect(result.body.msg).toBe("User name GhostUser was not found in database")
+        })
+    })
+})
