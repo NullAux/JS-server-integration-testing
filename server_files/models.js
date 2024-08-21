@@ -33,4 +33,8 @@ exports.selectUserByParametric = (user) => {
 exports.selectUserNamesByIsOnlineQuery = (queryBool) => {
     const SQLString = format("SELECT name FROM my_table WHERE isOnline = %L", queryBool)
     return db.query(SQLString)
+    .catch((err) => {
+        //Query threw an PostgreSQL error
+        return Promise.reject(err)
+    })
 }

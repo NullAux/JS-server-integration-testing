@@ -26,4 +26,5 @@ exports.getUserNamesByIsOnlineQuery = (req,res,next) => {
         result.rows = result.rows.map((nameObj) => nameObj.name)
         res.status(200).send(result.rows)
     })
+    .catch(next)
 }

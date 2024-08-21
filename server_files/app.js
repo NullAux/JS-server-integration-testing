@@ -36,9 +36,8 @@ app.get("/users", (req,res,next) => {
 //POST / PUT / DELETE examples
 
 //Error handling
-//400 Bad Request
 app.use((err, req, res, next) => {
-    console.log("App use error handle block ran for", err)
+    console.log("App error handle block ran for", err)
     //Handle custom errors
     if(err.status && err.msg)
     {
@@ -46,4 +45,9 @@ app.use((err, req, res, next) => {
     }
 
     //Handle unexpected errors...
+    //PotgreSQL - 22P02 invalid_text_representation (Query given wrong data type)
+    if (err.code === "22P02")
+    {
+        res.status(400).send({msg: "Query given wrong data type."})
+    }
 })
