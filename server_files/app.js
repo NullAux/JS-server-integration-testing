@@ -5,14 +5,6 @@ module.exports = app
 
 //app.use(express.json())//<- use this to take requests for the database info
 
-//First check using .use and next
-/*
-app.use((req,res,next) => {
-    console.log("I am the app.use")
-    next()
-})
-//Check success! remove in next commit
-*/
 
 //Endpoints to test:
 
@@ -36,6 +28,7 @@ app.get("/users", (req,res,next) => {
 //POST / PUT / DELETE examples
 
 //Error handling
+//Can split into serveral .use's, move into a seperate file after adding more
 app.use((err, req, res, next) => {
     console.log("App error handle block ran for", err)
     //Handle custom errors
