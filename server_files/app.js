@@ -25,6 +25,18 @@ app.get("/users", (req,res,next) => {
     controllers.getUserNamesByIsOnlineQuery(req,res,next)
 })
 
+//Get requested columns from database
+//Should be in form /users/column1+column2 etc. Ideally would be done by search bar in website which could format input
+app.get("/users/multi/:columns", (req, res, next) => {
+    controllers.getUsersColumnsByMultiParamRequest(req,res,next)
+})
+
+//Get name by approximate search term using LIKE
+//Again, should be handled by search bar
+app.get("/users/nameLike/:name", (req,res,next) => {
+    controllers.getUserNameLike(req,res,next)
+})
+
 //POST / PUT / DELETE examples
 
 //Error handling

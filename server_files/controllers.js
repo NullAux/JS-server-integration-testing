@@ -28,3 +28,26 @@ exports.getUserNamesByIsOnlineQuery = (req,res,next) => {
     })
     .catch(next)
 }
+
+
+//Get multiple columns by one request
+exports.getUsersColumnsByMultiParamRequest = (req,res,next) => {
+    const params = req.params.columns.split("+")
+    models.selectUsersColumnsByMultiParamRequest(params)
+    .then((result) => {
+        res.status(200).send(result.rows)
+    })
+    .catch(next)
+}
+
+
+//Get username by approximate search term
+exports.getUserNameLike = (req,res,next) => {
+    const searchTerm = req.params.name
+    models.selectUsernameLike(searchTerm)
+    .then((result) => {
+        result = result.rows.map((nameObj) => {return nameObj.name})
+        res.status(200).send(result)
+    })
+    .catch(next)
+}

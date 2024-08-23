@@ -78,3 +78,45 @@ describe("GET /users?isOnline error messages", () => {
         })
     })
 })
+
+describe("GET /users/multi/:columns - Get multiple columns of information in one query", () => {
+    test("When given one column, return that column for all users", () => {
+        return request(app).get("/users/multi/name")
+        .then((result) => {
+            expect(result.body).toEqual([{"name": "userNumberOne"}, {"name": "SecondUser"}, {"name": "<3('rd user)"}, {"name": "4th Gear"}])
+        })
+    })
+
+    test("When given multiple columns, return those columns (as objects showing each row", () => {
+        return request(app).get("/users/multi/name+status")
+        .then((result) => {
+            expect(result.body).toEqual([{"name": "userNumberOne", "status": "I'm number one!"}, {"name": "SecondUser", "status": "Rising star!"}, {"name": "<3('rd user)", "status": "..."}, {"name": "4th Gear", "status": "Named after a particularly good song."}])
+        })
+    })
+
+    test("Greenlisting - Check all requested columns are valid (to ensure no unhandled error, and to prevent SQL injection", () => {
+        return request(app).get("/users/multi/notARealColumn+*")
+        .then((result) => {
+            expect(result.status).toBe(400)
+            expect(result.body.msg).toBe("Requested column(s) notARealColumn,* are not valid")
+        })
+
+
+    })
+})
+
+describe("GET /users/nameLike/:name - Get user names by LIKE term ie search", () => {
+    test("Given a term like one name in database, return that name in an array", () => {
+        return request(app).get("/users/nameLike/4th")
+        .then((result) => {
+            expect(result.body).toEqual(["4th Gear"])
+        })
+    })
+
+    test("Given a term like multiple names in databse, return those names in an array", () => {
+        return request(app).get("/users/nameLike/user")
+        .then((result) => {
+            expect(result.body).toEqual(["userNumberOne", "SecondUser", "<3('rd user)"])
+        })
+    })
+})

@@ -38,3 +38,33 @@ exports.selectUserNamesByIsOnlineQuery = (queryBool) => {
         return Promise.reject(err)
     })
 }
+
+//Get multiple columns by one request
+exports.selectUsersColumnsByMultiParamRequest = (columns) => {
+    //Check inputs are valid
+    const whiteList = ["id", "name", "isOnline", "status"]
+    const failedQueryTerms = columns.filter((term) => {return !whiteList.includes(term)})
+    if(failedQueryTerms.length) {
+        return Promise.reject({
+            status: 400,
+            msg: `Requested column(s) ${failedQueryTerms.join()} are not valid`
+        })
+    }
+
+    //Build up query
+    const SQLSTRING = format("SELECT %s FROM my_table", columns.join())//< Remove ''
+    return db.query(SQLSTRING)
+    .catch((err) => {
+        console.log("Query failed")
+        return Promise.reject(err)
+    })
+}
+
+//Get username by approximate search term
+exports.selectUsernameLike = (searchTerm) => {
+    const SQLSTRING = format("SELECT name FROM my_table WHERE name ILIKE %L", `%${searchTerm}%`)
+    return db.query(SQLSTRING)
+    .catch((err) => {
+        return Promise.reject(err)
+    })
+}
